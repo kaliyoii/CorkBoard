@@ -1,0 +1,52 @@
+:root {
+    --bg: #000000;
+    --cork: #cfa05f;
+    --pri: #406b89;
+    --sec: #e8a457;
+    --link: #3193a0;
+    --red: #ce3838;
+    --text: #e5e5e5;
+}
+
+body {
+    background-color: var(--bg);
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar {
+    background-color: var(--bg);
+    width: 27vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    right: 0;
+    z-index: 999;
+}
+
+.canvas-wrapper {
+  background-color: #ffffff; 
+  position: relative; 
+  overflow: hidden; 
+  width: 50rem;
+  height: 50rem;
+}
+
+.canvas-wrapper::after {
+  content: "";
+  position: absolute;
+  top: -200%;
+  left: -200%;
+  width: 400%;
+  height: 400%;
+  
+  background-image: url('#grainy-noise');
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Ensure the canvas fills its wrapper */
+#canvas {
+  width: 100%;
+  height: 100%;
+}
