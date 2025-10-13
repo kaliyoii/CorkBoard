@@ -3,18 +3,17 @@
 include '../koneksi.php'; // pastikan $koneksi = mysqli connection
 
 // menangkap data yang dikirim dari form
-$title     = $_POST['title']     
-$content   = $_POST['content']   
-$color     = $_POST['color']     
-$pin_color = $_POST['pin_color'] 
+$title     = $_POST['title'];
+$content   = $_POST['content'];
+$color     = $_POST['color'];
+$pin_color = $_POST['pin_color'];
 $timestamp = $_POST['timestamp'] ?? ($_POST['timestasmp']); // perbaiki typo lama
-$type      = $_POST['type']      
-$img       = $_POST['img']       
-$x         = isset($_POST['x']) ? (int)$_POST['x'] 
-$y         = isset($_POST['y']) ? (int)$_POST['y'] 
-$w         = isset($_POST['w']) ? (int)$_POST['w'] 
-$h         = isset($_POST['h']) ? (int)$_POST['h'] 
-
+$type      = $_POST['type'];
+$img       = $_POST['img'];
+$x         = isset($_POST['x']) ? (int)$_POST['x'] : 0;
+$y         = isset($_POST['y']) ? (int)$_POST['y'] : 0;
+$w         = isset($_POST['w']) ? (int)$_POST['w'] : 0;
+$h         = isset($_POST['h']) ? (int)$_POST['h'] : 0;
 
 // masukkan data ke database
 $query = "
