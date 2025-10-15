@@ -1,10 +1,10 @@
 body {
-    background-color: #b79361;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     position: relative;
     overflow: hidden;
+    font-family: "Roboto", sans-serif;
 }
 
 body::after {
@@ -14,18 +14,24 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url(/assets/svg/noise.svg);
+    /* background: url(/assets/svg/noise.svg); */
     background-size: cover;
     filter: contrast(200%) brightness(25%);
-    opacity: 0.25;
+    opacity: 0.1;
     pointer-events: none;
     z-index: -999;
 }
 
 .board {
-  width: 100vw;
-  height: 100vh;
+    position: relative;
+    width: 2000px;
+    height: 2000px;
+    transition: transform 0.05s linear;
+    cursor: grab;
+    user-select: none;
+    background-color: #b79361;
 }
+
 
 .note {
     width: 20rem;
@@ -36,7 +42,7 @@ body::after {
     left: 100px;
     top: 100px;
     padding: 0.75rem 1rem 1rem;
-    box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 5px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
 .note-head {
@@ -72,14 +78,154 @@ body::after {
 .pin:active {
     opacity: 0.8;
     cursor: grabbing;
-    width: 2.5rem;
-    height: 2.5rem;
-    left: calc(50% - 1.25rem);
-    margin-top: -0.5rem;
+    transform: scale(1.25) translateY(-0.2rem);
     box-shadow: 10px 20px 5px -1px rgba(0, 0, 0, 0.25);
 }
 
 .note-body {
     height: calc(100% - 2rem);
     width: 100%;
+}
+
+.note dialog {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: transparent;
+}
+
+.note dialog:focus {
+    outline: none;
+}
+
+.note dialog::backdrop {
+    opacity: 0;
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.dialog-buttons {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.btn-dialog {
+    border: 0;
+    flex-grow: 1;
+    font-size: 1rem;
+    border-radius: 5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-dialog:active {
+    opacity: 0.7;
+}
+
+.btn-dialog.close {
+    background-color: rgb(55, 212, 110);
+}
+
+.btn-dialog.edit {
+    background-color: rgb(255, 228, 91);
+}
+
+.btn-dialog.delete {
+    background-color: rgb(255, 85, 85);
+    color: white;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 35rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #00000050;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+    align-items: center;
+}
+
+.delete {
+    display: flex;
+    background-color: rgb(255, 85, 85);
+    height: 5rem;
+    width: 30rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: white;
+}
+
+.delete h3 {
+    text-align: center;
+    align-items: center;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+.delete ion-icon {
+    font-size: 2rem;
+}
+
+.hint { position:fixed;
+    left:10px; bottom:10px;
+    background:#111;
+    color:#fff;
+    padding:8px 10px;
+    border: solid 2px #262626;
+    border-radius:6px;
+    font-size:13px;
+    opacity:.9;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.hint button {
+    background:transparent;
+    border:none;
+    color:#fff;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.zoom-controls {
+    position:fixed;
+    left:10px;
+    bottom:54px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    transition: 400ms ease-in-out;
+}
+.zoom-controls button {
+    background:#111;
+    color:#fff;
+    border: solid 2px #262626;
+    border-radius:6px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-size:16px;
+    transition: 100ms ease-in-out;
+}
+.zoom-controls button:hover {
+    background:#333;
+    border-color: #3e3e3e;
 }

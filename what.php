@@ -11,6 +11,15 @@
 </head>
 
 <body id="body">
+    <div class="sidebar" id="sidebar">
+        <div class="delete" id="delete">
+                <ion-icon name="trash-outline"></ion-icon>
+            <h3>
+                Drag here to delete
+            </h3>
+        </div>
+    </div>
+    
     <div class="board" id="board">
 
         <div class="note">
@@ -31,15 +40,9 @@
         </div>
 
     </div>
-    <div class="sidebar" id="sidebar">
-        <div class="delete" id="delete">
-                <ion-icon name="trash-outline"></ion-icon>
-            <h3>
-                Drag here to delete
-            </h3>
-        </div>
-    </div>
-        <div class="zoom-controls" id="zoom-controls">
+    
+
+    <div class="zoom-controls" id="zoom-controls">
         <button id="zoomIn">＋</button>
         <button id="zoomOut">－</button>
     </div>
@@ -52,5 +55,5 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
-<script src="assets/js/board.js"></script>  
+<script src="assets/js/what.js"></script>  
 </html>
