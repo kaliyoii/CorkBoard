@@ -4,31 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sticky Notes</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_copy.css">
     <link rel="stylesheet" href="assets/css/drag.css">
 </head>
 <body>
     <div class="sidebar">
 
     </div>
-    <div class="stage" id="stage">
+<div class="stage" id="stage">
     <div class="item" style="left:9600px; top:9600px">
-      <div class="item-header">Center-ish <span id="coords">(X, Y)</span></div>
-      <div class="item-body">Content</div>
+      <div class="note">
+            <dialog>
+                <div class="dialog-content">
+                    <div class="dialog-buttons">
+                        <a class="edit btn-dialog"><ion-icon name="create-outline"></ion-icon></a>
+                        <a class="close btn-dialog"><ion-icon name="close-outline"></ion-icon></a>
+                    </div>
+                </div>
+            </dialog>
+            <div class="note-head">
+                <div class="pin"></div>
+            </div>
+            <div class="note-body">
+                <p>ONE</p>
+            </div>
+        </div>
     </div>
-    <div class="item" style="left:500px; top:500px">
-      <div class="item-header">Top-left <span id="coords">(X, Y)</span></div>
-      <div class="item-body">Content</div>
-    </div>
-    <div class="item" style="left:18000px; top:300px">
-      <div class="item-header">Far right <span id="coords">(X, Y)</span></div>
-      <div class="item-body">Content</div>
-    </div>
-    <div class="item" style="left:300px; top:18000px">
-      <div class="item-header">Far bottom <span id="coords">(X, Y)</span></div>
-      <div class="item-body">Content</div>
-    </div>
-  </div>
+</div>
 
   <div class="zoom-controls" id="zoom-controls">
     <button id="zoomIn">＋</button>

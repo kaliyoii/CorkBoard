@@ -1,0 +1,118 @@
+:root {
+    --bg: #ffffff;
+    --cork: #cfa05f;
+    --pri: #406b89;
+    --sec: #e8a457;
+    --link: #3193a0;
+    --red: #ce3838;
+    --text: #e5e5e5;
+}
+
+body {
+    background-color: brown;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar {
+    background-color: #000000; /* Directly set to black */
+    width: 27vw;
+    height: 100vh;
+    display: flex;
+    position: fixed; /* Keeps it fixed in place when scrolling */
+    right: 0;
+    z-index: 999;
+}
+
+.canvas-wrapper {
+  background-color: #ffffff; 
+  position: relative; 
+  overflow: hidden; 
+  width: 50rem;
+  height: 50rem;
+}
+
+.canvas-wrapper::after {
+  content: "";
+  position: absolute;
+  top: -200%;
+  left: -200%;
+  width: 400%;
+  height: 400%;
+  
+  background-image: url('#grainy-noise');
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Ensure the canvas fills its wrapper */
+#canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.item {
+  width: 20rem; /* Adjusted for a typical note size */
+  height: 20rem;
+  background-color: #ededed; /* Light gray note background */
+  position: absolute; /* Keep absolute for positioning on the stage */
+  padding: 0.75rem 1rem 1rem;
+  box-shadow: 2px 5px 5px 1px rgba(0, 0, 0, 0.25);
+  /* Added margin-top to leave space for the pin */
+  margin-top: 1.5rem; 
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: box-shadow 0.1s; /* For visual feedback on drag */
+}
+
+/* Optional: change the cursor when hovering over a note (but not the header) */
+.item:hover {
+  box-shadow: 2px 5px 8px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* 2. Style the header/pin area */
+.item-header {
+  width: 100%;
+  padding-bottom: 0.5rem;
+  font-weight: bold;
+  cursor: grab; /* Keep cursor grab for dragging */
+  /* Remove any default margin/padding that might conflict */
+  margin: 0; 
+  display: flex; /* To align the coordinates span */
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 3. Style the body area */
+.item-body {
+  /* Use flex-grow or height calculation to make it fill the note */
+  height: calc(100% - 2.5rem); /* Adjust height to fill the remaining note area */
+  width: 100%;
+  overflow: auto;
+}
+
+/* 4. Style the Pin - This is the crucial part for the visual effect */
+.pin {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%; /* Makes it round */
+  background-color: var(--red, #ce3838); /* Use the defined red or a default */
+  position: absolute;
+  /* Center the pin horizontally above the note */
+  left: calc(50% - 1rem); 
+  top: 1rem; /* Position it half its height above the note */
+  cursor: grab;
+  box-shadow: 2px 5px 2px -1px rgba(0, 0, 0, 0.25);
+  z-index: 10; /* Ensure pin is above the note */
+}
+
+.pin::after {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 0.25rem;
+  width: 50%;
+  height: 50%;
+  opacity: 0.3;
+  background-color: white;
+  border-radius: 50%;
+}

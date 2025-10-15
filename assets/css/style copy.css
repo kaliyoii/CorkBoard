@@ -1,5 +1,5 @@
 :root {
-    --bg: #000000;
+    --bg: #ffffff;
     --cork: #cfa05f;
     --pri: #406b89;
     --sec: #e8a457;
@@ -15,11 +15,11 @@ body {
 }
 
 .sidebar {
-    background-color: var(--bg);
+    background-color: #000000; /* Directly set to black */
     width: 27vw;
     height: 100vh;
     display: flex;
-    position: fixed;
+    position: fixed; /* Keeps it fixed in place when scrolling */
     right: 0;
     z-index: 999;
 }
