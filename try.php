@@ -14,14 +14,6 @@
     <div class="board" id="board">
 
         <div class="note">
-            <dialog>
-                <div class="dialog-content">
-                    <div class="dialog-buttons">
-                        <a class="edit btn-dialog"><ion-icon name="create-outline"></ion-icon></a>
-                        <a class="close btn-dialog"><ion-icon name="close-outline"></ion-icon></a>
-                    </div>
-                </div>
-            </dialog>
             <div class="note-head">
                 <div class="pin"></div>
             </div>

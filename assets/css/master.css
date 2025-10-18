@@ -1,0 +1,217 @@
+/* ===== Root Variables ===== */
+:root {
+    --bg: #ffffff;
+    --cork: #cfa05f;
+    --pri: #406b89;
+    --sec: #e8a457;
+    --link: #3193a0;
+    --red: #ce3838;
+    --text: #e5e5e5;
+}
+
+/* ===== Base Styles ===== */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: system-ui, Segoe UI, Roboto, Arial;
+    background-color: black;
+    padding: 0;
+}
+
+/* ===== Stage / Canvas ===== */
+.stage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20000px;
+    height: 20000px;
+    background-color: rgb(156, 125, 82);
+    transform: translate(-50%, -50%) translate(var(--tx, 0px), var(--ty, 0px)) scale(var(--scale, 1));
+    transform-origin: center center;
+    background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px;
+    background-position: 0 0, 0 0;
+    box-sizing: border-box;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    background-color: #000000;
+    width: 27vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    /* right: 0; */
+    flex-direction: column;
+}
+
+/* ===== Trash Zone ===== */
+.trash {
+    background-color: red;
+    height: 5rem;
+}
+
+/* ===== Canvas Wrapper ===== */
+.canvas-wrapper {
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    width: 50rem;
+    height: 50rem;
+}
+
+.canvas-wrapper::after {
+    content: "";
+    position: absolute;
+    top: -200%;
+    left: -200%;
+    width: 400%;
+    height: 400%;
+    background-image: url('#grainy-noise');
+    opacity: 1;
+    pointer-events: none;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== Item (Note) ===== */
+.item {
+    position: absolute;
+    background-color: #ededed;
+    border-radius: 2px;
+    box-shadow: 2px 5px 5px 1px rgba(0, 0, 0, 0.25);
+    min-width: 120px;
+    width: 20rem;
+    height: 20rem;
+    padding: 2.5rem 1rem 1rem;
+    box-sizing: border-box;
+    transition: box-shadow 0.1s;
+    opacity: 1 !important;
+}
+
+.item:hover {
+    box-shadow: 2px 5px 8px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== Item Header ===== */
+.item-header {
+    width: 100%;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px 0.5rem;
+    border-radius: 8px 8px 0 0;
+    cursor: grab;
+    font-size: 13px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+/* ===== Item Body ===== */
+.item-body {
+    padding: 10px;
+    font-size: 13px;
+    height: calc(100% - 2.5rem);
+    width: 100%;
+    overflow: auto;
+}
+
+/* ===== Pin (Visual Accent) ===== */
+.pin {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--red, #ce3838);
+    position: absolute;
+    left: calc(50% - 1rem);
+    top: 1rem;
+    cursor: grab;
+    box-shadow: 2px 5px 2px -1px rgba(0, 0, 0, 0.25);
+}
+
+.pin::after {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: 0.25rem;
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.pin:active {
+    transform: scale(1.25);
+}
+
+/* ===== Dragging Behavior ===== */
+.dragging, .dragging * {
+    user-select: none !important;
+    cursor: grabbing !important;
+}
+
+/* ===== Hints ===== */
+.hint {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background: #111;
+    color: #fff;
+    padding: 8px 10px;
+    border: solid 2px #262626;
+    border-radius: 6px;
+    font-size: 13px;
+    opacity: .9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.hint button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ===== Zoom Controls ===== */
+.zoom-controls {
+    position: fixed;
+    left: 10px;
+    bottom: 54px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: 400ms ease-in-out;
+}
+
+.zoom-controls button {
+    background: #111;
+    color: #fff;
+    border: solid 2px #262626;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 100ms ease-in-out;
+    font-size: 1.25rem;
+}
+
+.zoom-controls button:hover {
+    background: #333;
+    border-color: #3e3e3e;
+}
+
+.zoom-controls button:active {
+    background: #565656;
+    border-color: #606060;
+}

@@ -1,7 +1,6 @@
 let topZ = 1;
 (function(){
 	const stage = document.getElementById('stage');
-	const sidebar = document.getElementById('sidebar');
 	let tx = 0, ty = 0, scale = 1;
 	let lastX = 0, lastY = 0;
 	let dragging = false; // Flag for panning the stage
