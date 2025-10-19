@@ -152,5 +152,9 @@ let topZ = 1;
 	})();
 
 document.querySelectorAll("form").forEach(form => {
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();})})
+	form.addEventListener("submit", function(event) {
+		if (form.id !== 'newNote') {
+			event.preventDefault();
+		}
+	})
+})

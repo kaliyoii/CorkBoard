@@ -1,14 +1,6 @@
 <?php
-session_start();
-require_once __DIR__ . '/assets/object/koneksi.php';
-
-// Check login session
-if (!isset($_SESSION['user_id'])) {
-    header('Location: signin.php');
-    exit;
-}
-
-$user_id = $_SESSION['user_id'];
+require_once __DIR__ . '/includes/object/login/auth_check.php';
+require_once __DIR__ . '/includes/object/koneksi.php';
 
 // Fetch all boards created by this user
 $stmt = $pdo->prepare("SELECT * FROM boards WHERE user_id = ? ORDER BY created_at DESC");
@@ -25,10 +17,10 @@ $boards = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="home">
-    <h1>Cork Board</h1>
+    <h1>halo <?php echo $username;?></h1>
     <div class="main">
         <div class="head">
-            <form action="newboard.php" method="POST" class="new-board">
+            <form action="boards/newboard.php" method="POST" class="new-board">
                 <h3>Create new board</h3>
                 <div>
                     <input type="color" name="color" id="color" value="#9c7d52">

@@ -53,9 +53,13 @@ let topZ = 1;
 	const pin = item.querySelector('.pin');
 	const menu = item.querySelector('.menu');
 	const deleteButton = item.querySelector('#deleteButton');
+	const textarea = item.querySelector('textarea');
+	const noteColorInput = item.querySelector('input[name="noteCol"]');
+	const pinColorInput = item.querySelector('input[name="pinCol"]');
 	let ix = 0, iy = 0, il = 0, it = 0;
 	let pressed = false;
 	let menuOpen = false;
+	let moving = false;
 
 	function handlePointerDown(e) {
 		e.stopPropagation();
@@ -105,16 +109,43 @@ let topZ = 1;
 			pin.classList.remove('active');
 		}
 
+		if (moving) {
+			const left = parseInt(item.style.left) || 0;
+			const top = parseInt(item.style.top) || 0;
+			const noteId = item.dataset.noteId;
+			if (noteId) {
+				fetch('notes/move_note.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({ note_id: noteId, x: Math.round(left), y: Math.round(top) })
+				}).then(()=>{}).catch(()=>{});
+			}
+		}
 		pressed = false;
 		moving = false;
 	}
 
 	function deleteAlert(e) {
+		e.preventDefault();
+		e.stopPropagation();
 		const result = confirm("Delete this note?");
 		if (result) {
-		console.log("Confirmed");
-		} else {
-		console.log("Cancelled");
+			const noteId = item.dataset.noteId;
+			if (noteId) {
+				fetch('notes/delete_note.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({ note_id: noteId })
+				}).then(r => r.json()).then(res => {
+					if (res.ok) {
+						item.remove();
+					} else {
+						alert('Failed to delete note');
+					}
+				}).catch(() => {
+					alert('Failed to delete note');
+				});
+			}
 		}
 	}
 
@@ -127,6 +158,83 @@ let topZ = 1;
 
 	if (deleteButton) {
 		deleteButton.addEventListener('click', deleteAlert);
+	}
+
+	// Handle textarea content changes
+	if (textarea) {
+		textarea.addEventListener('blur', function() {
+			const noteId = item.dataset.noteId;
+			if (noteId) {
+				fetch('notes/update_note.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						note_id: noteId,
+						content: textarea.value,
+						note_color: noteColorInput ? noteColorInput.value : '',
+						pin_color: pinColorInput ? pinColorInput.value : ''
+					})
+				}).then(r => r.json()).then(res => {
+					if (!res.ok) {
+						console.error('Failed to update note content');
+					}
+				}).catch(() => {
+					console.error('Failed to update note content');
+				});
+			}
+		});
+	}
+
+	// Handle note color changes
+	if (noteColorInput) {
+		noteColorInput.addEventListener('change', function() {
+			const noteId = item.dataset.noteId;
+			if (noteId) {
+				textarea.style.backgroundColor = this.value;
+				fetch('notes/update_note.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						note_id: noteId,
+						content: textarea.value,
+						note_color: this.value,
+						pin_color: pinColorInput ? pinColorInput.value : ''
+					})
+				}).then(r => r.json()).then(res => {
+					if (!res.ok) {
+						console.error('Failed to update note color');
+					}
+				}).catch(() => {
+					console.error('Failed to update note color');
+				});
+			}
+		});
+	}
+
+	// Handle pin color changes
+	if (pinColorInput) {
+		pinColorInput.addEventListener('change', function() {
+			const noteId = item.dataset.noteId;
+			if (noteId) {
+				pin.style.backgroundColor = this.value;
+				fetch('notes/update_note.php', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						note_id: noteId,
+						content: textarea.value,
+						note_color: noteColorInput ? noteColorInput.value : '',
+						pin_color: this.value
+					})
+				}).then(r => r.json()).then(res => {
+					if (!res.ok) {
+						console.error('Failed to update pin color');
+					}
+				}).catch(() => {
+					console.error('Failed to update pin color');
+				});
+			}
+		});
 	}
 });
 
@@ -151,6 +259,51 @@ let topZ = 1;
 
 	})();
 
+// Handle board color and title changes
+const boardColorInput = document.getElementById('boardColor');
+const boardTitleInput = document.getElementById('boardTitle');
+const stage = document.getElementById('stage');
+
+if (boardColorInput) {
+	boardColorInput.addEventListener('change', function() {
+		stage.style.backgroundColor = this.value;
+		saveBoardChanges();
+	});
+}
+
+if (boardTitleInput) {
+	boardTitleInput.addEventListener('blur', function() {
+		saveBoardChanges();
+	});
+}
+
+function saveBoardChanges() {
+	const boardId = new URLSearchParams(window.location.search).get('id');
+	if (!boardId) return;
+	
+	const formData = new URLSearchParams({
+		board_id: boardId,
+		title: boardTitleInput ? boardTitleInput.value : '',
+		color: boardColorInput ? boardColorInput.value : ''
+	});
+	
+	fetch('boards/update_board.php', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+		body: formData
+	}).then(r => r.json()).then(res => {
+		if (!res.ok) {
+			console.error('Failed to update board');
+		}
+	}).catch(() => {
+		console.error('Failed to update board');
+	});
+}
+
 document.querySelectorAll("form").forEach(form => {
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();})})
+	form.addEventListener("submit", function(event) {
+		if (form.id !== 'newNote') {
+			event.preventDefault();
+		}
+	})
+})

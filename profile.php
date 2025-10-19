@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/includes/object/login/auth_check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,49 +11,74 @@
 </head>
 <body class="home">
     <a href="home.php" class="home-button"><ion-icon name="home-outline"></ion-icon> Home</a>
+    
+    <?php if (isset($_SESSION['success'])): ?>
+        <div style="background: #4CAF50; color: white; padding: 10px; margin: 10px; border-radius: 5px;">
+            <?= htmlspecialchars($_SESSION['success']) ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+    
+    <?php if (isset($_SESSION['error'])): ?>
+        <div style="background: #f44336; color: white; padding: 10px; margin: 10px; border-radius: 5px;">
+            <?= htmlspecialchars($_SESSION['error']) ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
-    <form action="/php/updateprofile.php" class="main prof">
+    <form action="update_profile.php" method="POST" class="main prof">
         <h2>Edit profile</h2>
         <div>
-            <input type="text" required placeholder="Username" name="username" id="username">
-            <input type="email" required placeholder="Email address" name="email" id="email">
-            <div class="password-field">
-                <input type="password" required placeholder="Password" name="password" id="password">
-                <button type="button" id="eye">
-                    <ion-icon id="hide" name="eye-off-outline"></ion-icon>
-                    <ion-icon id="show" style="display: none;" name="eye-outline"></ion-icon>
-                </button> 
-            </div>
+            <input type="text" required placeholder="Username" name="username" id="username" value="<?= htmlspecialchars($username) ?>">
+            <input type="email" required placeholder="Email address" name="email" id="email" value="<?= htmlspecialchars($user_email) ?>">
             <button type="submit">Save</button>
         </div>
     </form>
 
-    <form action="/php/updateprofile.php" class="main prof">
-        <h2>Edit password</h2>
+    <form action="change_password.php" method="POST" class="main prof">
+        <h2>Change password</h2>
         <div>
             <div class="password-field">
-                <input type="password" required placeholder="Previous password" name="password" id="password">
-                <button type="button" id="eye">
-                    <ion-icon id="hide" name="eye-off-outline"></ion-icon>
-                    <ion-icon id="show" style="display: none;" name="eye-outline"></ion-icon>
+                <input type="password" required placeholder="Current password" name="current_password" id="current_password">
+                <button type="button" class="eye-btn" onclick="togglePassword('current_password')">
+                    <ion-icon name="eye-off-outline"></ion-icon>
                 </button> 
             </div>
             <div class="password-field">
-                <input type="password" required placeholder="New password" name="password" id="password">
-                <button type="button" id="eye">
-                    <ion-icon id="hide" name="eye-off-outline"></ion-icon>
-                    <ion-icon id="show" style="display: none;" name="eye-outline"></ion-icon>
+                <input type="password" required placeholder="New password" name="new_password" id="new_password">
+                <button type="button" class="eye-btn" onclick="togglePassword('new_password')">
+                    <ion-icon name="eye-off-outline"></ion-icon>
                 </button> 
             </div>
-            <button type="submit">Save</button>
+            <div class="password-field">
+                <input type="password" required placeholder="Confirm new password" name="confirm_password" id="confirm_password">
+                <button type="button" class="eye-btn" onclick="togglePassword('confirm_password')">
+                    <ion-icon name="eye-off-outline"></ion-icon>
+                </button> 
+            </div>
+            <button type="submit">Change Password</button>
         </div>
     </form>
 
-    <a href="logout.php" class="logout"><ion-icon name="log-out-outline"></ion-icon> Log out</a>
+    <a href="includes/object/login/logout.php" class="logout"><ion-icon name="log-out-outline"></ion-icon> Log out</a>
 
     <div class="footer">
         <p>&copy;<?=date('Y')?> - KALIYOII & FLUNCKS</p>
     </div>
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('ion-icon');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.name = 'eye-outline';
+            } else {
+                field.type = 'password';
+                icon.name = 'eye-off-outline';
+            }
+        }
+    </script>
     <script src="assets/js/home.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

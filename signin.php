@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/includes/object/login/guest_only.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +11,7 @@
 </head>
 <body>
     <h1>Cork Board</h1>
-    <form action="assets/object/login/ceklogin.php" method="POST" class="main">
+    <form action="includes/object/login/ceklogin.php" method="POST" class="main">
         <h2>Sign in</h2>
         <div>
             <input type="text" required placeholder="email" name="email" id="email">
