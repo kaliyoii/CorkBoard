@@ -25,59 +25,70 @@
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
             <div class="board-item">
                 <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
+                    <div>
+                        <div class="board-col" style="background-color: #9c7d52;"></div>
+                        <h3>Board Title</h3>
+                    </div>
+                    <span>Created at 25/10/2025</span>
                 </a>
                 <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
             </div>
 
-            <div class="board-item">
-                <a href="board.php?id=">
-                    <div class="board-col" style="background-color: #9c7d52;"></div>
-                    <h3>Board Title</h3>
-                </a>
-                <button id="delete"><ion-icon name="trash-outline"></ion-icon></button>
-            </div>
 
         </div>
     </div>
