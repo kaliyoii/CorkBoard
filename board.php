@@ -33,7 +33,8 @@
       <input type="color" name="color" id="boardColor" value="#9c7d52">
       <input type="text" name="title" id="boardTitle" placeholder="Board title">
     </form>
-    <form spellcheck="false" id="newNote">
+    <form spellcheck="false" id="newNote" method="POST" action="/CorkBoard/crud/input_proses.php">
+  <input type="hidden" name="board_id" value="<?= $board_id ?>">
       <h2>Add new note</h2>
       <div class="new-note">
         <button type="submit" id="insert"><ion-icon name="add-outline"></ion-icon></button>
@@ -60,7 +61,7 @@
     <!-- <button id="help" title="Help"><ion-icon name="help-outline"></ion-icon></button> -->
   </div>
   <script src="assets/js/board.js"></script>
-
+<script src="assets/js/reload.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

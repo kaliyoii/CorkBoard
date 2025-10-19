@@ -8,10 +8,10 @@
 </head>
 <body>
     <h1>Cork Board</h1>
-    <form action="/php/signincheck.php" class="main">
+    <form action="assets/object/login/ceklogin.php" method="POST" class="main">
         <h2>Sign in</h2>
         <div>
-            <input type="text" required placeholder="Username" name="username" id="username">
+            <input type="text" required placeholder="email" name="email" id="email">
             <div class="password-field">
                 <input type="password" required placeholder="Password" name="password" id="password">
                 <button type="button" id="eye">

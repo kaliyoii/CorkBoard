@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Cork Board</h1>
-    <form action="/php/signincheck.php" class="main">
+    <form action="assets/object/login/create_acc.php" method="POST" class="main">
         <h2>Sign up</h2>
         <div>
             <input type="text" required placeholder="Username" name="username" id="username">
