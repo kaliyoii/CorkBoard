@@ -42,6 +42,7 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Cork Board - <?= htmlspecialchars($board['title'] ?? '') ?></title>
     <!-- DO NOT FORGET -->
     <link rel="stylesheet" href="assets/css/board.css">
+    <link rel="shortcut icon" href="assets/icon/favicon.png" type="image/x-icon">
 </head>
 <body>
     

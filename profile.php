@@ -8,6 +8,7 @@ require_once __DIR__ . '/includes/object/login/auth_check.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cork Board - Edit profile</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/icon/favicon.png" type="image/x-icon">
 </head>
 <body class="home">
     <a href="home.php" class="home-button"><ion-icon name="home-outline"></ion-icon> Home</a>

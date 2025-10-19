@@ -15,6 +15,7 @@ $boards = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cork Board - Home</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/icon/favicon.png" type="image/x-icon">
 </head>
 <body class="home">
     <h1>Hello, <?= ucfirst($username) ?></h1>

@@ -8,6 +8,7 @@ require_once __DIR__ . '/includes/object/login/guest_only.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cork Board - Sign in</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/icon/favicon.png" type="image/x-icon">
 </head>
 <body>
     <h1>Cork Board</h1>
