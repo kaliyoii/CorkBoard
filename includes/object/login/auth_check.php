@@ -1,9 +1,10 @@
 <?php
 // absolutely first line
 session_start();
+define('BASE_URL', 'http://localhost:8888/cork/');
 
 if (empty($_SESSION['user_id'])) {
-    header('Location: ../../signin.php');
+    header('Location: ' . BASE_URL . 'signin.php');
     exit;
 }
 
@@ -20,7 +21,7 @@ if (!isset($_SESSION['user_data'])) {
     } else {
         // User not found, logout
         session_destroy();
-        header('Location: ../../signin.php');
+        header('Location: ' . BASE_URL . 'signin.php');
         exit;
     }
 }
