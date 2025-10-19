@@ -1,9 +1,13 @@
-<?php 
-$koneksi = mysqli_connect("localhost","root","root","cork");
- 
-// Check connection
-if (mysqli_connect_errno()){
-	echo "Koneksi database gagal : " . mysqli_connect_error();
+<?php
+$host = 'localhost';
+$dbname = 'cork_board';
+$user = 'root';
+$pass = ''; // or 'root' on MAMP
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("DB Connection failed: " . $e->getMessage());
 }
- 
 ?>

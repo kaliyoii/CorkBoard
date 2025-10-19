@@ -1,35 +1,45 @@
 <?php
-// koneksi database
-include '../koneksi.php'; // pastikan $koneksi = mysqli connection
+require_once __DIR__ . '../login/auth_check.php';
+checkLogin();
 
-// menangkap data yang dikirim dari form
-$title     = $_POST['title'];
-$content   = $_POST['content'];
-$color     = $_POST['color'];
-$pin_color = $_POST['pin_color'];
-$timestamp = $_POST['timestamp'] ?? ($_POST['timestasmp']); // perbaiki typo lama
-$type      = $_POST['type'];
-$img       = $_POST['img'];
-$x         = isset($_POST['x']) ? (int)$_POST['x'] : 0;
-$y         = isset($_POST['y']) ? (int)$_POST['y'] : 0;
-$w         = isset($_POST['w']) ? (int)$_POST['w'] : 0;
-$h         = isset($_POST['h']) ? (int)$_POST['h'] : 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $board_id = intval($_POST['board_id'] ?? 0);
+    $content  = trim($_POST['content'] ?? '');
+    $noteCol  = $_POST['noteCol'] ?? '#ffffff';
+    $pinCol   = $_POST['pinCol'] ?? '#ce3838';
 
-// masukkan data ke database
-$query = "
-INSERT INTO `notes`
-(`id`, `user_id`, `title`, `content`, `color`, `pin_color`, `timestamp`, `type`, `img`, `x`, `y`, `w`, `h`)
-VALUES
-(NULL, '$user_id', '$title', '$content', '$color', '$pin_color', '$timestamp', '$type', '$img', '$x', '$y', '$w', '$h')
-";
+    if (!$board_id) {
+        echo json_encode(['ok' => false, 'error' => 'Missing board_id']);
+        exit;
+    }
 
-if (mysqli_query($koneksi, $query)) {
-    // jika berhasil
-    header("Location: index.php");
-    exit;
-} else {
-    // jika gagal
-    echo "Error: " . mysqli_error($koneksi);
-    header("Location: index.php?koneksi gagal");
+    // Connect to database
+    global $pdo;
+    $pdo->beginTransaction();
+
+    try {
+        // 1. Create note
+        $stmt = $pdo->prepare("INSERT INTO notes (board_id, created_at, updated_at) VALUES (?, NOW(), NOW())");
+        $stmt->execute([$board_id]);
+        $note_id = $pdo->lastInsertId();
+
+        // 2. Add note content
+        $stmt = $pdo->prepare("
+            INSERT INTO note_content (note_id, content, color, pin_color, created_at, updated_at)
+            VALUES (?, ?, ?, ?, NOW(), NOW())
+        ");
+        $stmt->execute([$note_id, $content, $noteCol, $pinCol]);
+
+        // 3. Default layout position
+        $stmt = $pdo->prepare("INSERT INTO note_layout (note_id, pos_x, pos_y) VALUES (?, ?, ?)");
+        $stmt->execute([$note_id, rand(50, 300), rand(50, 300)]);
+
+        $pdo->commit();
+
+        echo json_encode(['ok' => true, 'note_id' => $note_id]);
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        echo json_encode(['ok' => false, 'error' => $e->getMessage()]);
+    }
 }
 ?>

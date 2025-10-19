@@ -1,32 +1,31 @@
 <?php
-// FIRST LINE, no whitespace before
-session_start();
-include '../koneksi.php';
+require_once __DIR__ . '/../koneksi.php'; // adjust path if needed
 
-// validate input
-$username = $_POST['username'] ?? '';
-$password = $_POST['password'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-// TODO: use password_hash in real apps. This is demo-only.
-$sql = "SELECT id, username FROM user WHERE username=? AND password=?";
-$stmt = $koneksi->prepare($sql);
-$stmt->bind_param("ss", $username, $password);
-$stmt->execute();
-$res = $stmt->get_result();
-$user = $res->fetch_assoc();
+    if (empty($email) || empty($password)) {
+        die("<script>alert('Please fill in all fields.');history.back();</script>");
+    }
 
-if ($user) {
-    // IMPORTANT: set session BEFORE redirect
-    $_SESSION['user_id']  = (int)$user['id'];
-    $_SESSION['username'] = $user['username'];
+    // Prepare statement using PDO
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
 
-    // (Optional) harden session
-    session_regenerate_id(true);
+    if ($user && password_verify($password, $user['password_hash'])) {
+        session_start();
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['is_admin'] = $user['is_admin'];
 
-    header("Location: ../crud/view.php");
-    exit;
+        echo "<script>alert('Login successful!');window.location.href='../../../home.php';</script>";
+    } else {
+        echo "<script>alert('Invalid email or password.');history.back();</script>";
+    }
 } else {
-    // bad creds
-    header("Location: /login.php?err=1");
+    header('Location: ../../../signin.php');
     exit;
 }
+?>
