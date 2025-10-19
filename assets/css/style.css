@@ -241,7 +241,8 @@ button[type=submit] {
 
 .board-item button {
     cursor: pointer;
-    background-color: rgb(255, 73, 73);
+    background: #ff5454;
+    background: linear-gradient(45deg, rgba(255, 84, 84, 1) 0%, rgba(214, 30, 30, 1) 100%);
     border: solid 0.15rem rgba(0, 0, 0, .2);
     border-radius: 2px;
     color: white;
