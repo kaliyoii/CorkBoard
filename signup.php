@@ -17,10 +17,9 @@ require_once __DIR__ . '/includes/object/login/guest_only.php';
             <input type="text" required placeholder="Username" name="username" id="username">
             <input type="email" required placeholder="Email address" name="email" id="email">
             <div class="password-field">
-                <input type="password" required placeholder="Password" name="password" id="password">
-                <button type="button" id="eye">
-                    <ion-icon id="hide" name="eye-off-outline"></ion-icon>
-                    <ion-icon id="show" style="display: none;" name="eye-outline"></ion-icon>
+                <input type="password" required placeholder="Password" name="confirm_password" id="confirm_password">
+                <button type="button" onclick="togglePassword('confirm_password')">
+                    <ion-icon name="eye-off-outline"></ion-icon>
                 </button> 
             </div>
             <button type="submit">Sign up</button>
@@ -30,7 +29,7 @@ require_once __DIR__ . '/includes/object/login/guest_only.php';
     <div class="footer">
         <p>&copy;<?=date('Y')?> - KALIYOII & FLUNCKS</p>
     </div>
-    <script src="assets/js/signup.js"></script>
+    <script src="assets/js/pwswitch.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

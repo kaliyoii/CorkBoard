@@ -39,7 +39,7 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cork Board - Board</title>
+    <title>Cork Board - <?= htmlspecialchars($board['title'] ?? '') ?></title>
     <!-- DO NOT FORGET -->
     <link rel="stylesheet" href="assets/css/board.css">
 </head>
@@ -97,7 +97,6 @@ $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button id="reCenter" title="Re-center"><ion-icon name="locate-outline"></ion-icon></button>
     <button id="zoomIn" title="Zoom in"><ion-icon name="add-outline"></ion-icon></button>
     <button id="zoomOut" title="Zoom out"><ion-icon name="remove-outline"></ion-icon></button>
-    <!-- <button id="help" title="Help"><ion-icon name="help-outline"></ion-icon></button> -->
   </div>
   <script src="assets/js/board.js"></script>
 <script src="assets/js/reload.js"></script>

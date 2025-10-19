@@ -17,7 +17,7 @@ $boards = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="home">
-    <h1>halo <?php echo $username;?></h1>
+    <h1>Hello, <?= ucfirst($username) ?></h1>
     <div class="main">
         <div class="head">
             <form action="boards/newboard.php" method="POST" class="new-board">
@@ -44,9 +44,9 @@ $boards = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                             <span>Created at <?= date('d/m/Y', strtotime($board['created_at'])) ?></span>
                         </a>
-                        <form action="delete_board.php" method="POST" style="display:inline;">
+                        <form action="boards/delete_board.php" method="POST" style="display:inline">
                             <input type="hidden" name="board_id" value="<?= $board['id'] ?>">
-                            <button type="submit" id="delete">
+                            <button type="submit" class="delete-btn">
                                 <ion-icon name="trash-outline"></ion-icon>
                             </button>
                         </form>

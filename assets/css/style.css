@@ -115,7 +115,7 @@ input[type=text], input[type=password], input[type=email] {
     position: relative;
 }
 
-#eye {
+.password-field button {
     background-color: rgb(20,20,20);
     border: none;
     color: white;
@@ -260,6 +260,7 @@ button[type=submit] {
     align-items: center;
     justify-content: center;
     width: 4rem;
+    height: 4rem;
     box-shadow: 0px 5px 15px 0 rgba(0, 0, 0, 0.5);
 }
 

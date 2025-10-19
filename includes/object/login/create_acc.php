@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         VALUES (?, ?, ?, NOW(), 0)
     ");
     if ($stmt->execute([$username, $email, $hashed])) {
-        echo "<script>alert('Account created successfully! Please log in.');window.location.href='../../signin.php';</script>";
+        echo "<script>alert('Account created successfully! Please log in.');window.location.href='../../../signin.php';</script>";
     } else {
         echo "<script>alert('Error creating account. Please try again.');history.back();</script>";
     }

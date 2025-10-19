@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'cork_board';
 $user = 'root';
-$pass = 'root'; // or 'root' on MAMP
+$pass = ''; // or 'root' on MAMP
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);

@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/object/login/auth_check.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cork Board - Home</title>
+    <title>Cork Board - Edit profile</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="home">
@@ -52,7 +52,7 @@ require_once __DIR__ . '/includes/object/login/auth_check.php';
             </div>
             <div class="password-field">
                 <input type="password" required placeholder="Confirm new password" name="confirm_password" id="confirm_password">
-                <button type="button" class="eye-btn" onclick="togglePassword('confirm_password')">
+                <button type="button" onclick="togglePassword('confirm_password')">
                     <ion-icon name="eye-off-outline"></ion-icon>
                 </button> 
             </div>
@@ -65,21 +65,8 @@ require_once __DIR__ . '/includes/object/login/auth_check.php';
     <div class="footer">
         <p>&copy;<?=date('Y')?> - KALIYOII & FLUNCKS</p>
     </div>
-    <script>
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const icon = field.nextElementSibling.querySelector('ion-icon');
-            
-            if (field.type === 'password') {
-                field.type = 'text';
-                icon.name = 'eye-outline';
-            } else {
-                field.type = 'password';
-                icon.name = 'eye-off-outline';
-            }
-        }
-    </script>
     <script src="assets/js/home.js"></script>
+    <script src="assets/js/pwswitch.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

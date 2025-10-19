@@ -187,36 +187,43 @@ let topZ = 1;
 
 	// Handle note color changes
 	if (noteColorInput) {
-		noteColorInput.addEventListener('change', function() {
-			const noteId = item.dataset.noteId;
-			if (noteId) {
-				textarea.style.backgroundColor = this.value;
-				fetch('notes/update_note.php', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: new URLSearchParams({
-						note_id: noteId,
-						content: textarea.value,
-						note_color: this.value,
-						pin_color: pinColorInput ? pinColorInput.value : ''
-					})
-				}).then(r => r.json()).then(res => {
-					if (!res.ok) {
-						console.error('Failed to update note color');
-					}
-				}).catch(() => {
+	noteColorInput.addEventListener('input', function() {
+		textarea.style.backgroundColor = this.value;
+	});
+
+	noteColorInput.addEventListener('change', function() {
+		const noteId = item.dataset.noteId;
+		if (noteId) {
+			fetch('notes/update_note.php', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					note_id: noteId,
+					content: textarea.value,
+					note_color: this.value,
+					pin_color: pinColorInput ? pinColorInput.value : ''
+				})
+			}).then(r => r.json()).then(res => {
+				if (!res.ok) {
 					console.error('Failed to update note color');
-				});
-			}
-		});
-	}
+				}
+			}).catch(() => {
+				console.error('Failed to update note color');
+			});
+		}
+	});
+}
+
 
 	// Handle pin color changes
 	if (pinColorInput) {
+		pinColorInput.addEventListener('input', function() {
+				pin.style.backgroundColor = this.value;
+		});
+		
 		pinColorInput.addEventListener('change', function() {
 			const noteId = item.dataset.noteId;
 			if (noteId) {
-				pin.style.backgroundColor = this.value;
 				fetch('notes/update_note.php', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -265,8 +272,10 @@ const boardTitleInput = document.getElementById('boardTitle');
 const stage = document.getElementById('stage');
 
 if (boardColorInput) {
-	boardColorInput.addEventListener('change', function() {
+	boardColorInput.addEventListener('input', function() {
 		stage.style.backgroundColor = this.value;
+	});
+	boardColorInput.addEventListener('change', function() {
 		saveBoardChanges();
 	});
 }
@@ -307,3 +316,23 @@ document.querySelectorAll("form").forEach(form => {
 		}
 	})
 })
+
+const newNoteForm = document.getElementById('newNote');
+if (newNoteForm) {
+  const noteColInput = newNoteForm.querySelector('#noteCol');
+  const pinColInput = newNoteForm.querySelector('#pinCol');
+  const textarea = newNoteForm.querySelector('#insertContent');
+  const submitButton = newNoteForm.querySelector('#insert');
+
+  if (noteColInput && textarea) {
+    noteColInput.addEventListener('input', () => {
+      textarea.style.backgroundColor = noteColInput.value;
+    });
+  }
+
+  if (pinColInput && submitButton) {
+    pinColInput.addEventListener('input', () => {
+      submitButton.style.backgroundColor = pinColInput.value;
+    });
+  }
+}
