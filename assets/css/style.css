@@ -79,6 +79,15 @@ form.main {
     justify-content: space-between;
 }
 
+form.main:nth-child(3) {
+    margin-top: -1rem;
+}
+
+.main.prof {
+    min-height: 1rem;
+    gap: 1rem;
+}
+
 form.main div {
     display: flex;
     align-items: center;
@@ -256,4 +265,54 @@ button[type=submit] {
 
 .board-item button:active {
     filter: brightness(0.5);
+}
+
+.logout {
+    color: red;
+    background: RGBA(0, 0, 0, .4);
+    background: linear-gradient(45deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border: solid 0.15rem rgba(255, 255, 255, .2);
+    border-radius: 1px;
+    padding: 1rem;
+    width: 28rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0px 5px 15px 0 rgba(0, 0, 0, 0.5);
+}
+
+.logout:hover {
+    border-color: #ff5454;
+}
+
+.logout:active {
+    color: black;
+    background: #ff5454;
+    background: linear-gradient(45deg, rgba(255, 84, 84, 1) 0%, rgba(214, 30, 30, 1) 100%);
+}
+
+.home-button {
+    color: white;
+    background: RGBA(0, 0, 0, .4);
+    background: linear-gradient(45deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border: solid 0.15rem rgba(255, 255, 255, .2);
+    border-radius: 1px;
+    padding: 1rem;
+    width: 28rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0px 5px 15px 0 rgba(0, 0, 0, 0.5);
+}
+
+.home-button:hover {
+    border: solid 0.15rem rgba(255, 255, 255, .8);
+}
+
+.home-button:active {
+    filter: brightness(.5);
 }
