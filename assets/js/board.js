@@ -1,110 +1,156 @@
-const notes = document.querySelectorAll('.note');
-let boardTranslateX = 0;
-let boardTranslateY = 0;
-
-
 let topZ = 1;
+(function(){
+	const stage = document.getElementById('stage');
+	let tx = 0, ty = 0, scale = 1;
+	let lastX = 0, lastY = 0;
+	let dragging = false;
 
-notes.forEach(note => {
-    const pin = note.querySelector('.pin');
-    const dialog = note.querySelector("dialog");
-    const closeButton = dialog.querySelector(".close");
-    let isDragging = false;
-    let offsetX = 0, offsetY = 0;
-    let startX = 0, startY = 0;
+	function applyTransform(){
+	   stage.style.setProperty('--tx', tx + 'px');
+	   stage.style.setProperty('--ty', ty + 'px');
+	   stage.style.setProperty('--scale', scale);
+	}
 
-    pin.addEventListener('mousedown', (e) => {
-        isDragging = false;
-        startX = e.clientX;
-        startY = e.clientY;
-        topZ++;
-        note.style.zIndex = topZ;
-        const rect = note.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-        e.preventDefault();
+	function centerStage(){ tx = 0; ty = 0; scale = 1; applyTransform(); }
+	centerStage();
 
-        const onMouseMove = (e) => {
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-                isDragging = true;
-            }
-            if (isDragging) {
-                note.style.left = (e.clientX - offsetX) + 'px';
-                note.style.top = (e.clientY - offsetY) + 'px';
+	// STAGE PANNING LOGIC
 
-                const deleteZone = document.getElementById('delete');
-                const deleteRect = deleteZone.getBoundingClientRect();
+	stage.addEventListener('pointerdown', (e) => {
+	   if (e.button && e.button !== 0) return;
+		if (e.target.closest('.item')) return; 
+	   dragging = true;
+	   lastX = e.clientX; lastY = e.clientY;
+	   document.documentElement.classList.add('dragging');
+	   stage.setPointerCapture(e.pointerId);
+	});
 
-                const cursorInsideDelete =
-                    e.clientX >= deleteRect.left &&
-                    e.clientX <= deleteRect.right &&
-                    e.clientY >= deleteRect.top &&
-                    e.clientY <= deleteRect.bottom;
+	stage.addEventListener('pointermove', (e) => {
+	   if (!dragging) return;
+	   const dx = e.clientX - lastX;
+	   const dy = e.clientY - lastY;
+	   lastX = e.clientX; lastY = e.clientY;
+	   tx += dx; ty += dy;
+	   applyTransform();
+	});
 
-                if (cursorInsideDelete) {
-                    note.style.boxShadow = "0 0 15px 3px red";
-                } else {
-                    note.style.boxShadow = "";
-                }
-            }
-        };
+	function endDrag(){
+	   if (!dragging) return;
+	   dragging = false;
+	   document.documentElement.classList.remove('dragging');
+	}
+	stage.addEventListener('pointerup', endDrag);
+	stage.addEventListener('pointercancel', endDrag);
+	window.addEventListener('mouseup', endDrag);
 
+	// recenter & zoom
+	document.getElementById('reCenter').addEventListener('click', () => { centerStage(); });
+	document.getElementById('zoomIn').addEventListener('click', () => { scale *= 1.1; applyTransform(); });
+	document.getElementById('zoomOut').addEventListener('click', () => { scale /= 1.1; applyTransform(); });
 
+	const items = document.querySelectorAll('.item');
+	items.forEach(item => {
+	const pin = item.querySelector('.pin');
+	const menu = item.querySelector('.menu');
+	const deleteButton = item.querySelector('#deleteButton');
+	let ix = 0, iy = 0, il = 0, it = 0;
+	let pressed = false;
+	let menuOpen = false;
 
-        const onMouseUp = (e) => {
-            if (!isDragging) { // click, not drag
-                openNoteMenu(note, pin);
-            }
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-            isDragging = false;
-            document.getElementById('sidebar').style.zIndex = ++topZ;
-        };
+	function handlePointerDown(e) {
+		e.stopPropagation();
+		pressed = true;
+		moving = false;
+		ix = e.clientX;
+		iy = e.clientY;
+		il = parseInt(item.style.left);
+		it = parseInt(item.style.top);
+		document.documentElement.classList.add('dragging');
+		e.target.setPointerCapture(e.pointerId);
+		topZ++;
+	}
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-    });
-    function openNoteMenu(note, pin) {
-        const rect = note.getBoundingClientRect();
-        note.classList.add("active");
-        dialog.style.position = 'absolute';
-        dialog.style.left = `calc(${rect.left + rect.width / 2}px - 7%)`;
-        dialog.style.top = `${rect.top + 2}px`;
-        dialog.showModal();
-        pin.style.display = "none";
-        note.style.zIndex = topZ;
-    }
+	function handlePointerMove(e) {
+		if (!pressed) return;
 
-    closeButton.addEventListener("click", () => {
-    dialog.close();
-    pin.removeAttribute("style");
-    note.classList.remove("active");
-    });
+		const dx = (e.clientX - ix) / scale;
+		const dy = (e.clientY - iy) / scale;
+
+		if (!moving && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
+			moving = true;
+		}
+
+		if (moving) {
+			item.style.left = (il + dx) + 'px';
+			item.style.top = (it + dy) + 'px';
+			item.style.zIndex = topZ;
+			if (menuOpen) {
+				menuOpen = false;
+			}
+		}
+	}
+
+	function handlePointerUp(e) {
+		document.documentElement.classList.remove('dragging');
+
+		if (pressed && !moving) {
+			menuOpen = !menuOpen;
+		}
+
+		if (menuOpen) {
+			menu.classList.add('active');
+			pin.classList.add('active');
+		} else {
+			menu.classList.remove('active');
+			pin.classList.remove('active');
+		}
+
+		pressed = false;
+		moving = false;
+	}
+
+	function deleteAlert(e) {
+		const result = confirm("Delete this note?");
+		if (result) {
+		console.log("Confirmed");
+		} else {
+		console.log("Cancelled");
+		}
+	}
+
+	if (pin) {
+		pin.addEventListener('pointerdown', handlePointerDown);
+		pin.addEventListener('pointermove', handlePointerMove);
+		pin.addEventListener('pointerup', handlePointerUp);
+		pin.addEventListener('pointercancel', handlePointerUp);
+	}
+
+	if (deleteButton) {
+		deleteButton.addEventListener('click', deleteAlert);
+	}
 });
 
-const board = document.getElementById('board');
-let isBoardDragging = false;
-let boardStartX = 0, boardStartY = 0;
+	const sidebar = document.getElementById('sidebar');
+	const hideButton = document.getElementById('hideSidebar');
+	let sidebarHidden = false;
+	function hideSidebar(e) {
+		if (sidebarHidden) {
+			sidebarHidden = !sidebarHidden;
+			sidebar.classList.remove('hidden');
+			hideButton.innerText = '>';
+		} else {
+			sidebarHidden = !sidebarHidden;
+			sidebar.classList.add('hidden');
+			hideButton.innerText = '<';
+		}
+		
+	}
+	if (hideButton) {
+			hideButton.addEventListener('click', hideSidebar);
+		}
 
-board.addEventListener('mousedown', (e) => {
-    if (e.target.closest('.note')) return; // ignore if clicking on a note
-    isBoardDragging = true;
-    boardStartX = e.clientX - boardTranslateX;
-    boardStartY = e.clientY - boardTranslateY;
-    board.style.cursor = "grabbing";
-    e.preventDefault();
-});
+	})();
 
-document.addEventListener('mousemove', (e) => {
-    if (!isBoardDragging) return;
-    boardTranslateX = e.clientX - boardStartX;
-    boardTranslateY = e.clientY - boardStartY;
-    board.style.transform = `translate(${boardTranslateX}px, ${boardTranslateY}px)`;
-});
-
-document.addEventListener('mouseup', () => {
-    isBoardDragging = false;
-    board.style.cursor = "default";
-});
+document.querySelectorAll("form").forEach(form => {
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();})})
