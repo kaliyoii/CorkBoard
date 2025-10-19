@@ -7,7 +7,7 @@ body {
         linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
         linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
         background-size: 40px 40px, 40px 40px;
-    background-attachment: fixed;
+    background-attachment: scroll;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,6 @@ h1 {
 }
 
 .main {
-    backdrop-filter: blur(10px);
     margin: 2rem;
     background: rgb(17, 17, 17);
     background: linear-gradient(0deg,rgba(17, 17, 17, .8) 0%, rgba(17, 17, 17, .7) 50%, rgba(17, 17, 17, .8) 100%);
