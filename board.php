@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticky Notes</title>
+    <title>Cork Board - Board</title>
+    <!-- DO NOT FORGET -->
     <link rel="stylesheet" href="assets/css/board.css">
 </head>
 <body>
