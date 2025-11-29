@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  web:
+    image: php:apache
+    container_name: corkboard_web
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    container_name: corkboard_db
+    environment:
+      MYSQL_ROOT_PASSWORD: cunny
+      MYSQL_DATABASE: corkboard
+      MYSQL_USER: cork
+      MYSQL_PASSWORD: cunny
+    volumes:
+      - db:/var/lib/mysql/
+
+volumes:
+  db:
