@@ -13,7 +13,7 @@ require_once __DIR__ . '/includes/object/login/guest_only.php';
 <body>
     <h1>Cork Board</h1>
     <form action="includes/object/login/ceklogin.php" method="POST" class="main">
-        <h2>Sign in</h2>
+        <h2>Log in</h2>
         <div>
             <input type="text" required placeholder="email" name="email" id="email">
             <div class="password-field">
