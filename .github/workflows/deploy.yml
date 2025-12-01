@@ -20,5 +20,5 @@ jobs:
         username: ${{ secrets.if0_40337262 }}
         password: ${{ secrets.NZsNJcsO33x }}
         local-dir: .
-        server-dir: ${{ /htdocs/ }}
+        server-dir: htdocs
         timeout: 300000
