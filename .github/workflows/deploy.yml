@@ -16,9 +16,9 @@ jobs:
     - name: Deploy to InfinityFree via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.3
       with:
-        server: ${{ secrets.ftpupload.net }}
-        username: ${{ secrets.if0_40337262 }}
-        password: ${{ secrets.NZsNJcsO33x }}
+        server: ${{secrets.ftpupload.net}}
+        username: ${{secrets.if0_40337262}}
+        password: ${{secrets.NZsNJcsO33x}}
         local-dir: .
         server-dir: htdocs
         timeout: 300000
